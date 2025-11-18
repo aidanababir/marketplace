@@ -191,7 +191,7 @@ const Home = () => {
             </CardHeader>
             <CardContent>
               <CardDescription className="text-base">
-                Проверенные продавцы и гарантия качества товаров. Покупайте с уверенностью!
+                Проверенные продавцы и гарантия качества товаров. Покупайтеshjdbhjvfj
               </CardDescription>
             </CardContent>
           </Card>
