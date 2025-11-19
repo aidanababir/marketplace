@@ -29,7 +29,7 @@ const Products = () => {
       const response = await axios.get('/api/products');
       setProducts(response.data);
     } catch (err) {
-      setError('Ошибка загрузки продуктов');
+      setError('Product loading error');
     } finally {
       setLoading(false);
     }
@@ -37,12 +37,12 @@ const Products = () => {
 
   const handleAddToCart = async (productId) => {
     if (!user) {
-      alert('Пожалуйста, войдите в систему для добавления товаров в корзину');
+      alert('Please log in to add items to your cart');
       return;
     }
     const product = products.find(p => p.id === productId);
     if (product && product.stock === 0) {
-      alert('Товар отсутствует на складе');
+      alert('Item out of stock');
       return;
     }
     try {
@@ -50,7 +50,7 @@ const Products = () => {
       // Обновляем список продуктов
       fetchProducts();
     } catch (err) {
-      alert(err.response?.data?.error || 'Ошибка при добавлении в корзину');
+      alert(err.response?.data?.error || 'Error adding to cart');
     }
   };
 
@@ -61,7 +61,7 @@ const Products = () => {
         const product = products.find(p => p.id === productId);
         const newQuantity = cartItem.quantity + 1;
         if (product && product.stock < newQuantity) {
-          alert(`Недостаточно товара на складе. Доступно: ${product.stock}`);
+          alert(`Insufficient stock. Avaliable: ${product.stock}`);
           return;
         }
         await updateCartItem(cartItem.id, newQuantity);
@@ -69,7 +69,7 @@ const Products = () => {
         fetchProducts();
       }
     } catch (err) {
-      alert(err.response?.data?.error || 'Ошибка при обновлении корзины');
+      alert(err.response?.data?.error || 'Cart update error');
     }
   };
 
@@ -84,7 +84,7 @@ const Products = () => {
         }
       }
     } catch (err) {
-      alert(err.response?.data?.error || 'Ошибка при обновлении корзины');
+      alert(err.response?.data?.error || 'Cart update error');
     }
   };
 
@@ -152,7 +152,7 @@ const Products = () => {
       <div className="container mx-auto py-12 px-4 flex items-center justify-center min-h-[60vh]">
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
-          <p className="text-muted-foreground">Загрузка...</p>
+          <p className="text-muted-foreground">Loading...</p>
         </div>
       </div>
     );
@@ -176,8 +176,8 @@ const Products = () => {
   return (
     <div className="container mx-auto py-4 sm:py-8 px-4">
       <div className="mb-6 sm:mb-8">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">Продукты</h1>
-        <p className="text-sm sm:text-base text-muted-foreground">Выберите товары для покупки</p>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">Items</h1>
+        <p className="text-sm sm:text-base text-muted-foreground">Select items to purchase</p>
       </div>
 
       {/* Поиск и фильтры */}
@@ -188,7 +188,7 @@ const Products = () => {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               type="text"
-              placeholder="Поиск товаров..."
+              placeholder="Searching products..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 text-sm sm:text-base"
@@ -198,11 +198,11 @@ const Products = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {/* Фильтр по минимальной цене */}
             <div>
-              <Label htmlFor="minPrice">Минимальная цена (₸)</Label>
+              <Label htmlFor="minPrice">Minimum price (₸)</Label>
               <Input
                 id="minPrice"
                 type="number"
-                placeholder={`От ${formatPrice(minPrice)}`}
+                placeholder={`from ${formatPrice(minPrice)}`}
                 value={priceRange.min}
                 onChange={(e) => setPriceRange({ ...priceRange, min: e.target.value })}
                 min={0}
@@ -211,11 +211,11 @@ const Products = () => {
 
             {/* Фильтр по максимальной цене */}
             <div>
-              <Label htmlFor="maxPrice">Максимальная цена (₸)</Label>
+              <Label htmlFor="maxPrice">Maximum price (₸)</Label>
               <Input
                 id="maxPrice"
                 type="number"
-                placeholder={`До ${formatPrice(maxPrice)}`}
+                placeholder={`till ${formatPrice(maxPrice)}`}
                 value={priceRange.max}
                 onChange={(e) => setPriceRange({ ...priceRange, max: e.target.value })}
                 min={0}
@@ -224,18 +224,18 @@ const Products = () => {
 
             {/* Сортировка */}
             <div>
-              <Label htmlFor="sortBy">Сортировка</Label>
+              <Label htmlFor="sortBy">Sorting</Label>
               <select
                 id="sortBy"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
-                <option value="date-desc">Новые первыми</option>
-                <option value="date-asc">Старые первыми</option>
-                <option value="name">По названию</option>
-                <option value="price-asc">По цене: дешевле</option>
-                <option value="price-desc">По цене: дороже</option>
+                <option value="date-desc">Newest first</option>
+                <option value="date-asc">Oldest first</option>
+                <option value="name">By name</option>
+                <option value="price-asc">By price: low to high</option>
+                <option value="price-desc">By price: high to low</option>
               </select>
             </div>
 
@@ -248,7 +248,7 @@ const Products = () => {
                   className="w-full"
                 >
                   <X className="h-4 w-4 mr-2" />
-                  Сбросить
+                  Reset
                 </Button>
               )}
             </div>
@@ -257,7 +257,7 @@ const Products = () => {
           {/* Информация о результатах */}
           {hasActiveFilters && (
             <div className="text-sm text-muted-foreground">
-              Найдено товаров: {filteredAndSortedProducts.length} из {products.length}
+              Products found: {filteredAndSortedProducts.length} out of {products.length}
             </div>
           )}
         </div>
@@ -265,14 +265,14 @@ const Products = () => {
 
       {products.length === 0 ? (
         <Card className="p-12 text-center">
-          <p className="text-muted-foreground text-lg">Продукты не найдены</p>
+          <p className="text-muted-foreground text-lg">Products not found</p>
         </Card>
       ) : filteredAndSortedProducts.length === 0 ? (
         <Card className="p-12 text-center">
-          <p className="text-muted-foreground text-lg">Товары не найдены по заданным фильтрам</p>
+          <p className="text-muted-foreground text-lg">No products found for the selected filters</p>
           {hasActiveFilters && (
             <Button variant="outline" onClick={clearFilters} className="mt-4">
-              Сбросить фильтры
+              Reset filters
             </Button>
           )}
         </Card>
@@ -347,7 +347,7 @@ const Products = () => {
                       disabled={product.stock === 0}
                     >
                       <ShoppingCart className="h-4 w-4 mr-2" />
-                      {product.stock === 0 ? 'Нет в наличии' : 'Добавить в корзину'}
+                      {product.stock === 0 ? 'Out of stock' : 'Add to cart'}
                     </Button>
                   )}
                 </CardFooter>

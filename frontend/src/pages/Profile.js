@@ -37,11 +37,11 @@ const Profile = () => {
 
   const getStatusBadge = (status) => {
     const statusConfig = {
-      pending: { label: 'В обработке', variant: 'secondary' },
-      processing: { label: 'Обрабатывается', variant: 'default' },
-      shipped: { label: 'Отправлен', variant: 'default' },
-      delivered: { label: 'Доставлен', variant: 'default' },
-      cancelled: { label: 'Отменен', variant: 'destructive' }
+      pending: { label: 'Pricessing', variant: 'secondary' },
+      processing: { label: 'Being processed', variant: 'default' },
+      shipped: { label: 'Shipped', variant: 'default' },
+      delivered: { label: 'Delivered', variant: 'default' },
+      cancelled: { label: 'Canceled', variant: 'destructive' }
     };
 
     const config = statusConfig[status] || statusConfig.pending;
@@ -68,7 +68,7 @@ const Profile = () => {
       <div className="container mx-auto py-12 px-4 flex items-center justify-center min-h-[60vh]">
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
-          <p className="text-muted-foreground">Загрузка...</p>
+          <p className="text-muted-foreground">Loading...</p>
         </div>
       </div>
     );
@@ -77,19 +77,19 @@ const Profile = () => {
   return (
     <div className="container mx-auto py-4 sm:py-8 px-4">
       <div className="mb-6 sm:mb-8">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">Личный кабинет</h1>
-        <p className="text-sm sm:text-base text-muted-foreground">Управление профилем и заказами</p>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">My account</h1>
+        <p className="text-sm sm:text-base text-muted-foreground">Profile and order management</p>
       </div>
 
       <Tabs defaultValue="profile" className="space-y-6">
         <TabsList>
           <TabsTrigger value="profile">
             <UserCircle className="h-4 w-4 mr-2" />
-            Профиль
+            Profile
           </TabsTrigger>
           <TabsTrigger value="orders">
             <ShoppingBag className="h-4 w-4 mr-2" />
-            Мои заказы ({orders.length})
+            My orders ({orders.length})
           </TabsTrigger>
         </TabsList>
 
@@ -97,8 +97,8 @@ const Profile = () => {
         <TabsContent value="profile">
           <Card>
             <CardHeader>
-              <CardTitle>Информация о профиле</CardTitle>
-              <CardDescription>Ваши личные данные</CardDescription>
+              <CardTitle>Profile info</CardTitle>
+              <CardDescription>Your personal details</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
@@ -106,7 +106,7 @@ const Profile = () => {
                   <UserCircle className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
                 </div>
                 <div className="text-center sm:text-left">
-                  <h3 className="text-lg sm:text-xl font-semibold">{user?.name || 'Пользователь'}</h3>
+                  <h3 className="text-lg sm:text-xl font-semibold">{user?.name || 'User'}</h3>
                   <p className="text-sm sm:text-base text-muted-foreground">{user?.email}</p>
                 </div>
               </div>
@@ -115,7 +115,7 @@ const Profile = () => {
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <User className="h-4 w-4" />
-                    Имя
+                    Name
                   </div>
                   <p className="font-medium">{user?.name || 'Не указано'}</p>
                 </div>
@@ -129,10 +129,10 @@ const Profile = () => {
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <Package className="h-4 w-4" />
-                    Роль
+                    Role
                   </div>
                   <p className="font-medium">
-                    {user?.role === 'admin' ? 'Администратор' : 'Пользователь'}
+                    {user?.role === 'admin' ? 'Admin' : 'User'}
                   </p>
                 </div>
               </div>
@@ -145,12 +145,12 @@ const Profile = () => {
           {orders.length === 0 ? (
             <Card className="p-12 text-center">
               <ShoppingBag className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-              <CardTitle className="mb-2">Заказов пока нет</CardTitle>
+              <CardTitle className="mb-2">No orders yet</CardTitle>
               <CardDescription className="mb-6">
-                Начните делать покупки, чтобы увидеть здесь свои заказы
+                Start shopping to see your orders here
               </CardDescription>
               <Button onClick={() => navigate('/products')}>
-                Перейти к продуктам
+                Proceed to products
               </Button>
             </Card>
           ) : (
@@ -160,7 +160,7 @@ const Profile = () => {
                   <CardHeader>
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-0">
                       <div className="flex-1">
-                        <CardTitle className="mb-2 text-lg sm:text-xl">Заказ {order.order_number}</CardTitle>
+                        <CardTitle className="mb-2 text-lg sm:text-xl">Order {order.order_number}</CardTitle>
                         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
                           <div className="flex items-center gap-1">
                             <Calendar className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -168,7 +168,7 @@ const Profile = () => {
                           </div>
                           <div className="flex items-center gap-1">
                             <Package className="h-3 w-3 sm:h-4 sm:w-4" />
-                            {order.order_items?.length || 0} товар(ов)
+                            {order.order_items?.length || 0} item(s)
                           </div>
                         </div>
                       </div>
@@ -185,7 +185,7 @@ const Profile = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                       {/* Order Items */}
                       <div>
-                        <h3 className="font-semibold mb-4">Товары в заказе</h3>
+                        <h3 className="font-semibold mb-4">Items in order</h3>
                         <div className="space-y-3">
                           {order.order_items?.map((item) => (
                             <div key={item.id} className="flex items-center gap-3">
@@ -215,26 +215,26 @@ const Profile = () => {
 
                       {/* Shipping Info */}
                       <div>
-                        <h3 className="font-semibold mb-4">Данные доставки</h3>
+                        <h3 className="font-semibold mb-4">Delivery details</h3>
                         <div className="space-y-3 text-sm">
                           <div className="flex items-start gap-2">
                             <User className="h-4 w-4 mt-0.5 text-muted-foreground" />
                             <div>
-                              <p className="text-muted-foreground">Получатель</p>
+                              <p className="text-muted-foreground">Recipient</p>
                               <p className="font-medium">{order.full_name}</p>
                             </div>
                           </div>
                           <div className="flex items-start gap-2">
                             <Phone className="h-4 w-4 mt-0.5 text-muted-foreground" />
                             <div>
-                              <p className="text-muted-foreground">Телефон</p>
+                              <p className="text-muted-foreground">Telephone number</p>
                               <p className="font-medium">{order.phone}</p>
                             </div>
                           </div>
                           <div className="flex items-start gap-2">
                             <MapPin className="h-4 w-4 mt-0.5 text-muted-foreground" />
                             <div>
-                              <p className="text-muted-foreground">Адрес</p>
+                              <p className="text-muted-foreground">Adress</p>
                               <p className="font-medium">
                                 {order.city}, {order.address}
                                 {order.postal_code && `, ${order.postal_code}`}

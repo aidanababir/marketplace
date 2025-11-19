@@ -58,15 +58,15 @@ const Checkout = () => {
   if (cartItems.length === 0 && !orderSuccess) {
     return (
       <div className="container mx-auto py-12 px-4">
-        <h1 className="text-4xl font-bold mb-8">Корзина</h1>
+        <h1 className="text-4xl font-bold mb-8">Cart</h1>
         <Card className="p-12 text-center">
           <ShoppingBag className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-          <CardTitle className="mb-2">Ваша корзина пуста</CardTitle>
+          <CardTitle className="mb-2">Your cart is empty</CardTitle>
           <CardDescription className="mb-6">
-            Добавьте товары из каталога продуктов
+            Add items from the product catalog
           </CardDescription>
           <Button onClick={() => navigate('/products')}>
-            Перейти к продуктам
+            Go to products
           </Button>
         </Card>
       </div>
@@ -109,7 +109,7 @@ const Checkout = () => {
       clearCart();
     } catch (error) {
       setOrderProcessing(false);
-      alert(error.response?.data?.error || 'Ошибка при оформлении заказа');
+      alert(error.response?.data?.error || 'Error while placing the order');
     }
   };
 
@@ -130,22 +130,22 @@ const Checkout = () => {
               <CheckCircle2 className="h-12 w-12 sm:h-16 sm:w-16 text-primary" />
             </div>
           </div>
-          <CardTitle className="text-xl sm:text-2xl mb-2">Заказ успешно оформлен!</CardTitle>
+          <CardTitle className="text-xl sm:text-2xl mb-2">Order successfully placed!</CardTitle>
           <CardDescription className="mb-4 sm:mb-6 text-sm sm:text-base">
-            Спасибо за покупку! Мы свяжемся с вами в ближайшее время для подтверждения заказа.
+            Thank you for your purchase! We will contact you shortly to confirm your order.
           </CardDescription>
           <div className="space-y-2 mb-4 sm:mb-6 text-left bg-muted p-3 sm:p-4 rounded-lg text-sm sm:text-base">
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Номер заказа:</span>
+              <span className="text-muted-foreground">Order number:</span>
               <span className="font-semibold">{orderNumber || 'Загрузка...'}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Сумма:</span>
+              <span className="text-muted-foreground">Total amount:</span>
               <span className="font-semibold">{formatPrice(orderTotal)} ₸</span>
             </div>
           </div>
           <Button onClick={handleContinueShopping} className="w-full">
-            Продолжить покупки
+            Continue Shopping 
           </Button>
         </Card>
       </div>
@@ -154,7 +154,7 @@ const Checkout = () => {
 
   return (
     <div className="container mx-auto py-4 sm:py-8 px-4">
-      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8">Корзина</h1>
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8">Cart</h1>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Cart Items */}
@@ -226,22 +226,22 @@ const Checkout = () => {
         <div className="lg:col-span-1">
           <Card className="sticky top-20">
             <CardHeader>
-              <CardTitle>Итого</CardTitle>
+              <CardTitle>Total Price</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Товаров:</span>
+                <span className="text-muted-foreground">Items:</span>
                 <span className="font-medium">{totalItems}</span>
               </div>
               <Separator />
               <div className="flex justify-between text-lg font-bold">
-                <span>Сумма:</span>
+                <span>Total Price:</span>
                 <span className="text-primary">{formatPrice(totalPrice)} ₸</span>
               </div>
             </CardContent>
             <CardFooter>
               <Button className="w-full" size="lg" onClick={() => setShowOrderDialog(true)}>
-                Оформить заказ
+                Checkout
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
             </CardFooter>
@@ -253,16 +253,16 @@ const Checkout = () => {
       <Dialog open={showOrderDialog} onOpenChange={setShowOrderDialog}>
         <DialogContent className="w-[95vw] max-w-[500px] max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-lg sm:text-xl">Оформление заказа</DialogTitle>
+            <DialogTitle className="text-lg sm:text-xl">Checkout</DialogTitle>
             <DialogDescription className="text-sm">
-              Заполните данные для доставки
+              Enter your details below
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleOrderSubmit} className="space-y-3 sm:space-y-4">
             <div className="space-y-2">
               <Label htmlFor="fullName">
                 <User className="h-4 w-4 inline mr-2" />
-                ФИО
+                Full name
               </Label>
               <Input
                 id="fullName"
@@ -275,7 +275,7 @@ const Checkout = () => {
             <div className="space-y-2">
               <Label htmlFor="phone">
                 <Phone className="h-4 w-4 inline mr-2" />
-                Телефон
+                  Telephone number
               </Label>
               <Input
                 id="phone"
@@ -287,7 +287,7 @@ const Checkout = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="city">Город</Label>
+              <Label htmlFor="city">City</Label>
               <Input
                 id="city"
                 value={orderForm.city}
@@ -299,7 +299,7 @@ const Checkout = () => {
             <div className="space-y-2">
               <Label htmlFor="address">
                 <MapPin className="h-4 w-4 inline mr-2" />
-                Адрес доставки
+                Delivery Adress
               </Label>
               <Input
                 id="address"
@@ -310,7 +310,7 @@ const Checkout = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="postalCode">Почтовый индекс</Label>
+              <Label htmlFor="postalCode">Postal Code</Label>
               <Input
                 id="postalCode"
                 value={orderForm.postalCode}
@@ -320,11 +320,11 @@ const Checkout = () => {
             </div>
             <div className="bg-muted p-4 rounded-lg space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Товаров:</span>
+                <span className="text-muted-foreground">Total Items:</span>
                 <span className="font-medium">{totalItems}</span>
               </div>
               <div className="flex justify-between font-bold">
-                <span>Итого:</span>
+                <span>Total Price:</span>
                 <span className="text-primary">{formatPrice(totalPrice)} ₸</span>
               </div>
             </div>
@@ -335,17 +335,17 @@ const Checkout = () => {
                 onClick={() => setShowOrderDialog(false)}
                 disabled={orderProcessing}
               >
-                Отмена
+                Cancel
               </Button>
               <Button type="submit" disabled={orderProcessing}>
                 {orderProcessing ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Обработка...
+                    Processing...
                   </>
                 ) : (
                   <>
-                    Подтвердить заказ
+                    Confirm Order
                     <CheckCircle2 className="h-4 w-4 ml-2" />
                   </>
                 )}

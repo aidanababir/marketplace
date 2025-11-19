@@ -24,7 +24,7 @@ const ProductDetail = () => {
       const response = await axios.get(`/api/products/${id}`);
       setProduct(response.data);
     } catch (err) {
-      setError('Товар не найден');
+      setError('Product not found');
     } finally {
       setLoading(false);
     }
@@ -36,11 +36,11 @@ const ProductDetail = () => {
 
   const handleAddToCart = async () => {
     if (!user) {
-      alert('Пожалуйста, войдите в систему для добавления товаров в корзину');
+      alert('Please log in to add items to your cart');
       return;
     }
     if (product.stock === 0) {
-      alert('Товар отсутствует на складе');
+      alert('Item out of stock');
       return;
     }
     try {
@@ -48,7 +48,7 @@ const ProductDetail = () => {
       // Обновляем информацию о товаре после добавления
       fetchProduct();
     } catch (err) {
-      alert(err.response?.data?.error || 'Ошибка при добавлении в корзину');
+      alert(err.response?.data?.error || 'Error adding to cart');
     }
   };
 
@@ -58,7 +58,7 @@ const ProductDetail = () => {
       if (cartItem) {
         const newQuantity = cartItem.quantity + 1;
         if (product.stock < newQuantity) {
-          alert(`Недостаточно товара на складе. Доступно: ${product.stock}`);
+          alert(`Item out of stock. Available: ${product.stock}`);
           return;
         }
         await updateCartItem(cartItem.id, newQuantity);
@@ -66,7 +66,7 @@ const ProductDetail = () => {
         fetchProduct();
       }
     } catch (err) {
-      alert(err.response?.data?.error || 'Ошибка при обновлении корзины');
+      alert(err.response?.data?.error || 'Error adding to cart');
     }
   };
 
@@ -81,7 +81,7 @@ const ProductDetail = () => {
         }
       }
     } catch (err) {
-      alert(err.response?.data?.error || 'Ошибка при обновлении корзины');
+      alert(err.response?.data?.error || 'Error adding to cart');
     }
   };
 
@@ -90,7 +90,7 @@ const ProductDetail = () => {
       <div className="container mx-auto py-12 px-4 flex items-center justify-center min-h-[60vh]">
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
-          <p className="text-muted-foreground">Загрузка товара...</p>
+          <p className="text-muted-foreground">Loading product...</p>
         </div>
       </div>
     );
@@ -101,12 +101,12 @@ const ProductDetail = () => {
       <div className="container mx-auto py-12 px-4">
         <Card className="p-12 text-center">
           <AlertCircle className="h-16 w-16 mx-auto mb-4 text-destructive" />
-          <CardTitle className="mb-2">Товар не найден</CardTitle>
+          <CardTitle className="mb-2">Product not found</CardTitle>
           <CardDescription className="mb-6">
-            {error || 'Запрашиваемый товар не существует'}
+            {error || 'Requested product does not exist'}
           </CardDescription>
           <Button onClick={() => navigate('/products')}>
-            Вернуться к продуктам
+            Back to products
           </Button>
         </Card>
       </div>
@@ -125,8 +125,8 @@ const ProductDetail = () => {
         className="mb-4 sm:mb-6"
       >
         <ArrowLeft className="h-4 w-4 mr-2" />
-        <span className="hidden sm:inline">Назад к продуктам</span>
-        <span className="sm:hidden">Назад</span>
+        <span className="hidden sm:inline">Back to products</span>
+        <span className="sm:hidden">Back</span>
       </Button>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
@@ -168,7 +168,7 @@ const ProductDetail = () => {
               </span>
               {product.stock !== undefined && (
                 <Badge variant={product.stock > 0 ? 'default' : 'destructive'}>
-                  {product.stock > 0 ? `В наличии (${product.stock})` : 'Нет в наличии'}
+                  {product.stock > 0 ? `In stock (${product.stock})` : 'Out of stock'}
                 </Badge>
               )}
             </div>
@@ -178,14 +178,14 @@ const ProductDetail = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle>О товаре</CardTitle>
+              <CardTitle>About</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center gap-2">
                 <Package className="h-5 w-5 text-muted-foreground" />
                 <div>
-                  <p className="text-sm text-muted-foreground">Наличие на складе</p>
-                  <p className="font-medium">{product.stock || 0} шт.</p>
+                  <p className="text-sm text-muted-foreground">Stock availability</p>
+                  <p className="font-medium">{product.stock || 0} pc.</p>
                 </div>
               </div>
             </CardContent>
@@ -214,7 +214,7 @@ const ProductDetail = () => {
                     <Plus className="h-4 w-4" />
                   </Button>
                   <span className="text-muted-foreground ml-4">
-                    в корзине
+                    In cart
                   </span>
                 </div>
               </div>
@@ -226,7 +226,7 @@ const ProductDetail = () => {
                 disabled={product.stock === 0}
               >
                 <ShoppingCart className="h-5 w-5 mr-2" />
-                {product.stock === 0 ? 'Нет в наличии' : 'Добавить в корзину'}
+                {product.stock === 0 ? 'Out of stock' : 'Add to cart'}
               </Button>
             )}
 
@@ -236,13 +236,13 @@ const ProductDetail = () => {
                 className="w-full"
                 onClick={() => navigate('/products')}
               >
-                Продолжить покупки
+                Continue shopping
               </Button>
               <Button
                 className="w-full bg-green-600 hover:bg-green-700 text-white border-green-600"
                 onClick={() => navigate('/checkout')}
               >
-                Перейти в корзину
+                Proceed to cart
               </Button>
             </div>
           </div>

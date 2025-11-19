@@ -32,12 +32,12 @@ const Home = () => {
 
   const handleAddToCart = async (productId) => {
     if (!user) {
-      alert('Пожалуйста, войдите в систему для добавления товаров в корзину');
+      alert('Please sign in to add itemsto your cart');
       return;
     }
     const product = featuredProducts.find(p => p.id === productId);
     if (product && product.stock === 0) {
-      alert('Товар отсутствует на складе');
+      alert('Out of Stock');
       return;
     }
     try {
@@ -45,7 +45,7 @@ const Home = () => {
       // Обновляем список продуктов
       fetchFeaturedProducts();
     } catch (err) {
-      alert(err.response?.data?.error || 'Ошибка при добавлении в корзину');
+      alert(err.response?.data?.error || 'Error adding to cart');
     }
   };
 
@@ -56,7 +56,7 @@ const Home = () => {
         const product = featuredProducts.find(p => p.id === productId);
         const newQuantity = cartItem.quantity + 1;
         if (product && product.stock < newQuantity) {
-          alert(`Недостаточно товара на складе. Доступно: ${product.stock}`);
+          alert(`Insufficient stock available. Available: ${product.stock}`);
           return;
         }
         await updateCartItem(cartItem.id, newQuantity);
@@ -64,7 +64,7 @@ const Home = () => {
         fetchFeaturedProducts();
       }
     } catch (err) {
-      alert(err.response?.data?.error || 'Ошибка при обновлении корзины');
+      alert(err.response?.data?.error || 'Error adding to cart');
     }
   };
 
@@ -79,7 +79,7 @@ const Home = () => {
         }
       }
     } catch (err) {
-      alert(err.response?.data?.error || 'Ошибка при обновлении корзины');
+      alert(err.response?.data?.error || 'Error updating cart');
     }
   };
 
@@ -91,7 +91,7 @@ const Home = () => {
         <div className="container mx-auto text-center relative z-10">
           <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-6">
             <Sparkles className="h-4 w-4 text-primary" />
-            <span className="text-sm font-medium text-primary">Новые поступления каждый день</span>
+            <span className="text-sm font-medium text-primary">New arrivals every day</span>
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6 bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent px-4">
             Welcome to ElectraHub
@@ -102,13 +102,13 @@ const Home = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" asChild>
               <Link to="/products">
-                Посмотреть каталог
+                Shop Now
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
               <Link to="/products">
-                Популярные товары
+                Best Sellers
               </Link>
             </Button>
           </div>
@@ -121,19 +121,19 @@ const Home = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-primary mb-2">10K+</div>
-              <div className="text-sm text-muted-foreground">Довольных клиентов</div>
+              <div className="text-sm text-muted-foreground">Happy Customers</div>
             </div>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-primary mb-2">5K+</div>
-              <div className="text-sm text-muted-foreground">Товаров в каталоге</div>
+              <div className="text-sm text-muted-foreground">Products</div>
             </div>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-primary mb-2">24/7</div>
-              <div className="text-sm text-muted-foreground">Поддержка клиентов</div>
+              <div className="text-sm text-muted-foreground">Customer Support</div>
             </div>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-primary mb-2">100%</div>
-              <div className="text-sm text-muted-foreground">Гарантия качества</div>
+              <div className="text-sm text-muted-foreground">Quality Guarantee</div>
             </div>
           </div>
         </div>
@@ -142,9 +142,9 @@ const Home = () => {
       {/* Features Section */}
       <section className="container mx-auto py-8 sm:py-12 md:py-16 px-4">
         <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">Почему выбирают нас</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">Why Shop with Us</h2>
           <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
-            Мы предлагаем лучший сервис и качественные товары для вашего комфорта
+            We offer the best service and quality products for your comfort.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
@@ -159,7 +159,7 @@ const Home = () => {
             </CardHeader>
             <CardContent>
               <CardDescription className="text-base">
-                Тысячи товаров на любой вкус и потребность. От электроники до одежды - у нас есть всё!
+                Thousands of products to suit every taste and need - form electronics to clothing.
               </CardDescription>
             </CardContent>
           </Card>
@@ -175,7 +175,7 @@ const Home = () => {
             </CardHeader>
             <CardContent>
               <CardDescription className="text-base">
-                Доставка в кратчайшие сроки по всей стране. Получите заказ уже завтра!
+                Fast delivery across the country, get your order tomorrow!
               </CardDescription>
             </CardContent>
           </Card>
@@ -191,7 +191,7 @@ const Home = () => {
             </CardHeader>
             <CardContent>
               <CardDescription className="text-base">
-                Проверенные продавцы и гарантия качества товаров. Покупайтеshjdbhjvfj
+                Verified sellers and product quality guarantee.
               </CardDescription>
             </CardContent>
           </Card>
@@ -204,13 +204,13 @@ const Home = () => {
           <div className="container mx-auto px-4">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-0 mb-6 sm:mb-8">
               <div>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">Популярные товары</h2>
-                <p className="text-sm sm:text-base text-muted-foreground">Самые востребованные товары этой недели</p>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">Best Sellers</h2>
+                <p className="text-sm sm:text-base text-muted-foreground">The most popular products this week</p>
               </div>
               <Button variant="outline" asChild className="w-full sm:w-auto">
                 <Link to="/products">
-                  <span className="hidden sm:inline">Смотреть все</span>
-                  <span className="sm:hidden">Все</span>
+                  <span className="hidden sm:inline">See All Items</span>
+                  <span className="sm:hidden">All</span>
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Link>
               </Button>
@@ -306,24 +306,24 @@ const Home = () => {
         <Card className="bg-gradient-to-r from-primary/10 to-primary/5 border-2 border-primary/20">
           <CardHeader className="text-center px-4 sm:px-6">
             <CardTitle className="text-2xl sm:text-3xl md:text-4xl mb-3 sm:mb-4">
-              Готовы начать покупки?
+              Ready to shop?
             </CardTitle>
             <CardDescription className="text-sm sm:text-base md:text-lg">
-              Присоединяйтесь к тысячам довольных клиентов и откройте для себя лучшие предложения
+              Join thousands of happy customers and discover the best deals.
             </CardDescription>
           </CardHeader>
           <CardContent className="text-center">
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild>
                 <Link to="/products">
-                  Перейти в каталог
+                  Proceed to catalog
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Link>
               </Button>
               {!user && (
                 <Button size="lg" variant="outline" asChild>
                   <Link to="/register">
-                    Создать аккаунт
+                    Sign In
                   </Link>
                 </Button>
               )}

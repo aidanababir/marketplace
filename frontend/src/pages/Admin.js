@@ -74,7 +74,7 @@ const Admin = () => {
       setFormData({ name: '', description: '', price: '', image_url: '', stock: '' });
       fetchProducts();
     } catch (error) {
-      alert(error.response?.data?.error || 'Ошибка при сохранении продукта');
+      alert(error.response?.data?.error || 'Error saving product');
     }
   };
 
@@ -91,14 +91,14 @@ const Admin = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Вы уверены, что хотите удалить этот продукт?')) {
+    if (!window.confirm('Are you sure you want to delete this product?')) {
       return;
     }
     try {
       await axios.delete(`/api/admin/products/${id}`);
       fetchProducts();
     } catch (error) {
-      alert(error.response?.data?.error || 'Ошибка при удалении продукта');
+      alert(error.response?.data?.error || 'Error deleting product');
     }
   };
 
@@ -113,17 +113,17 @@ const Admin = () => {
       await axios.put(`/api/orders/admin/${orderId}/status`, { status: newStatus });
       fetchOrders();
     } catch (error) {
-      alert(error.response?.data?.error || 'Ошибка при обновлении статуса');
+      alert(error.response?.data?.error || 'Error updating status');
     }
   };
 
   const getStatusBadge = (status) => {
     const statusConfig = {
-      pending: { label: 'В обработке', variant: 'secondary' },
-      processing: { label: 'Обрабатывается', variant: 'default' },
-      shipped: { label: 'Отправлен', variant: 'default' },
-      delivered: { label: 'Доставлен', variant: 'default' },
-      cancelled: { label: 'Отменен', variant: 'destructive' }
+      pending: { label: 'Processing', variant: 'secondary' },
+      processing: { label: 'Being processed', variant: 'default' },
+      shipped: { label: 'Shipped', variant: 'default' },
+      delivered: { label: 'Delivered', variant: 'default' },
+      cancelled: { label: 'Cancelled', variant: 'destructive' }
     };
 
     const config = statusConfig[status] || statusConfig.pending;
@@ -150,7 +150,7 @@ const Admin = () => {
       <div className="container mx-auto py-12 px-4 flex items-center justify-center min-h-[60vh]">
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
-          <p className="text-muted-foreground">Загрузка...</p>
+          <p className="text-muted-foreground">Loading...</p>
         </div>
       </div>
     );
@@ -160,8 +160,8 @@ const Admin = () => {
     <div className="container mx-auto py-4 sm:py-8 px-4">
       <div className="flex items-center justify-between mb-6 sm:mb-8">
         <div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">Админ панель</h1>
-          <p className="text-sm sm:text-base text-muted-foreground">Управление продуктами и заказами</p>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">Admin panel</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">Profile and order management</p>
         </div>
       </div>
 
@@ -191,8 +191,8 @@ const Admin = () => {
           <div className="flex items-center justify-between mb-6 sm:mb-8">
             <Button onClick={() => setShowForm(true)} className="w-full sm:w-auto">
               <Plus className="h-4 w-4 mr-2" />
-              <span className="hidden sm:inline">Добавить продукт</span>
-              <span className="sm:hidden">Добавить</span>
+              <span className="hidden sm:inline">Add product</span>
+              <span className="sm:hidden">Add</span>
             </Button>
           </div>
 
@@ -201,9 +201,9 @@ const Admin = () => {
               <CardHeader>
                 <div className="flex items-start sm:items-center justify-between gap-2">
                   <div className="flex-1 min-w-0">
-                    <CardTitle className="text-lg sm:text-xl">{editingProduct ? 'Редактировать продукт' : 'Новый продукт'}</CardTitle>
+                    <CardTitle className="text-lg sm:text-xl">{editingProduct ? 'Edit item' : 'New item'}</CardTitle>
                     <CardDescription className="text-sm">
-                      {editingProduct ? 'Измените информацию о продукте' : 'Заполните информацию о новом продукте'}
+                      {editingProduct ? 'Edit product info' : 'Fill the info for the new product'}
                     </CardDescription>
                   </div>
                   <Button variant="ghost" size="icon" onClick={handleCancel} className="flex-shrink-0">
@@ -215,7 +215,7 @@ const Admin = () => {
                 <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="name">Название *</Label>
+                      <Label htmlFor="name">Name *</Label>
                       <Input
                         id="name"
                         type="text"
@@ -225,7 +225,7 @@ const Admin = () => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="price">Цена *</Label>
+                      <Label htmlFor="price">Price *</Label>
                       <Input
                         id="price"
                         type="number"
@@ -237,7 +237,7 @@ const Admin = () => {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="description">Описание</Label>
+                    <Label htmlFor="description">Description</Label>
                     <textarea
                       id="description"
                       className="flex min-h-[100px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -247,7 +247,7 @@ const Admin = () => {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="image_url">URL изображения</Label>
+                      <Label htmlFor="image_url">URL Image</Label>
                       <Input
                         id="image_url"
                         type="url"
@@ -256,7 +256,7 @@ const Admin = () => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="stock">Количество на складе</Label>
+                      <Label htmlFor="stock">Quantity in stock</Label>
                       <Input
                         id="stock"
                         type="number"
@@ -267,11 +267,11 @@ const Admin = () => {
                   </div>
                   <div className="flex flex-col sm:flex-row gap-2">
                     <Button type="submit" className="w-full sm:w-auto">
-                      <span className="hidden sm:inline">{editingProduct ? 'Сохранить изменения' : 'Создать продукт'}</span>
-                      <span className="sm:hidden">{editingProduct ? 'Сохранить' : 'Создать'}</span>
+                      <span className="hidden sm:inline">{editingProduct ? 'Save changes' : 'Create product'}</span>
+                      <span className="sm:hidden">{editingProduct ? 'Save' : 'Create'}</span>
                     </Button>
                     <Button type="button" variant="outline" onClick={handleCancel} className="w-full sm:w-auto">
-                      Отмена
+                      Cancel
                     </Button>
                   </div>
                 </form>
@@ -282,13 +282,13 @@ const Admin = () => {
           <div>
             <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 flex items-center gap-2">
               <Package className="h-6 w-6" />
-              Продукты ({products.length})
+              Products ({products.length})
             </h2>
             {products.length === 0 ? (
               <Card className="p-12 text-center">
                 <Package className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                <CardTitle className="mb-2">Продукты не найдены</CardTitle>
-                <CardDescription>Начните с добавления первого продукта</CardDescription>
+                <CardTitle className="mb-2">Products not found</CardTitle>
+                <CardDescription>Start by adding your first product</CardDescription>
               </Card>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
@@ -310,7 +310,7 @@ const Admin = () => {
                         {product.price} ₸
                       </CardDescription>
                       <CardDescription>
-                        На складе: {product.stock || 0}
+                        In stock: {product.stock || 0}
                       </CardDescription>
                     </CardHeader>
                     <CardFooter className="flex gap-2">
@@ -320,7 +320,7 @@ const Admin = () => {
                         onClick={() => handleEdit(product)}
                       >
                         <Edit className="h-4 w-4 mr-2" />
-                        Редактировать
+                        Edit
                       </Button>
                       <Button
                         variant="destructive"
@@ -343,13 +343,13 @@ const Admin = () => {
         <div>
           <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
             <ShoppingBag className="h-6 w-6" />
-            Все заказы ({orders.length})
+            All orders ({orders.length})
           </h2>
           {orders.length === 0 ? (
             <Card className="p-12 text-center">
               <ShoppingBag className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-              <CardTitle className="mb-2">Заказов нет</CardTitle>
-              <CardDescription>Заказы появятся здесь после оформления</CardDescription>
+              <CardTitle className="mb-2">No orders</CardTitle>
+              <CardDescription>Your orders will appear here after checkout</CardDescription>
             </Card>
           ) : (
             <div className="space-y-6">
@@ -417,26 +417,26 @@ const Admin = () => {
 
                       {/* Shipping Info & Status */}
                       <div>
-                        <h3 className="font-semibold mb-4">Данные доставки</h3>
+                        <h3 className="font-semibold mb-4">Order details</h3>
                         <div className="space-y-3 text-sm mb-6">
                           <div className="flex items-start gap-2">
                             <User className="h-4 w-4 mt-0.5 text-muted-foreground" />
                             <div>
-                              <p className="text-muted-foreground">Получатель</p>
+                              <p className="text-muted-foreground">Recipient</p>
                               <p className="font-medium">{order.full_name}</p>
                             </div>
                           </div>
                           <div className="flex items-start gap-2">
                             <Phone className="h-4 w-4 mt-0.5 text-muted-foreground" />
                             <div>
-                              <p className="text-muted-foreground">Телефон</p>
+                              <p className="text-muted-foreground">Phone number</p>
                               <p className="font-medium">{order.phone}</p>
                             </div>
                           </div>
                           <div className="flex items-start gap-2">
                             <MapPin className="h-4 w-4 mt-0.5 text-muted-foreground" />
                             <div>
-                              <p className="text-muted-foreground">Адрес</p>
+                              <p className="text-muted-foreground">Adress</p>
                               <p className="font-medium">
                                 {order.city}, {order.address}
                                 {order.postal_code && `, ${order.postal_code}`}
@@ -445,7 +445,7 @@ const Admin = () => {
                           </div>
                         </div>
                         <div>
-                          <Label className="mb-2 block text-sm">Изменить статус</Label>
+                          <Label className="mb-2 block text-sm">Change status</Label>
                           <div className="flex flex-wrap gap-2">
                             {['pending', 'processing', 'shipped', 'delivered', 'cancelled'].map((status) => (
                               <Button

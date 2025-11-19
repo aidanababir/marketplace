@@ -25,7 +25,7 @@ const Register = () => {
       await register(email, password, name);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.error || 'Ошибка регистрации');
+      setError(err.response?.data?.error || 'Registration error');
     } finally {
       setLoading(false);
     }
@@ -35,9 +35,9 @@ const Register = () => {
     <div className="container mx-auto py-6 sm:py-12 px-4 flex items-center justify-center min-h-[80vh]">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-xl sm:text-2xl font-bold text-center">Регистрация</CardTitle>
+          <CardTitle className="text-xl sm:text-2xl font-bold text-center">Register</CardTitle>
           <CardDescription className="text-center">
-            Создайте новый аккаунт для начала покупок
+            Create new account to start shopping
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -49,11 +49,11 @@ const Register = () => {
           )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Имя</Label>
+              <Label htmlFor="name">Name</Label>
               <Input
                 id="name"
                 type="text"
-                placeholder="Ваше имя"
+                placeholder="Your name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -71,11 +71,11 @@ const Register = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Пароль</Label>
+              <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
                 type="password"
-                placeholder="Минимум 6 символов"
+                placeholder="Minimum 6 symbols"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -86,12 +86,12 @@ const Register = () => {
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Регистрация...
+                  Signing in...
                 </>
               ) : (
                 <>
                   <UserPlus className="mr-2 h-4 w-4" />
-                  Зарегистрироваться
+                  Sign in
                 </>
               )}
             </Button>
@@ -99,9 +99,9 @@ const Register = () => {
         </CardContent>
         <CardFooter className="flex flex-col">
           <p className="text-sm text-center text-muted-foreground">
-            Уже есть аккаунт?{' '}
+            Already have an account ?{' '}
             <Link to="/login" className="text-primary hover:underline font-medium">
-              Войти
+              Log in
             </Link>
           </p>
         </CardFooter>

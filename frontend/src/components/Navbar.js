@@ -22,25 +22,25 @@ const Navbar = () => {
       <div className="container flex h-16 items-center justify-between px-4">
         <Link to="/" className="flex items-center space-x-2" onClick={() => setMobileMenuOpen(false)}>
           <Package className="h-6 w-6 text-primary" />
-          <span className="text-xl font-bold">Marketplace</span>
+          <span className="text-xl font-bold">ElectraHub</span>
         </Link>
         
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-4">
           <Link to="/" className="flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
             <Home className="h-4 w-4" />
-            Главная
+            Main
           </Link>
           <Link to="/products" className="flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
             <Package className="h-4 w-4" />
-            Продукты
+            Products
           </Link>
           
           {user && (
             <>
               <Link to="/checkout" className="relative flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
                 <ShoppingCart className="h-4 w-4" />
-                Корзина
+                Cart
                 {getCartCount() > 0 && (
                   <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
                     {getCartCount()}
@@ -49,12 +49,12 @@ const Navbar = () => {
               </Link>
               <Link to="/profile" className="flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
                 <User className="h-4 w-4" />
-                Личный кабинет
+                My account
               </Link>
               {user.role === 'admin' && (
                 <Link to="/admin" className="flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
                   <Settings className="h-4 w-4" />
-                  Админка
+                  Admin
                 </Link>
               )}
             </>
@@ -63,15 +63,15 @@ const Navbar = () => {
           {user ? (
             <Button variant="outline" size="sm" onClick={handleLogout}>
               <LogOut className="h-4 w-4 mr-2" />
-              Выйти
+              Log out
             </Button>
           ) : (
             <div className="flex items-center gap-2">
               <Button variant="ghost" size="sm" asChild>
-                <Link to="/login">Войти</Link>
+                <Link to="/login">Log in</Link>
               </Button>
               <Button size="sm" asChild>
-                <Link to="/register">Регистрация</Link>
+                <Link to="/register">Sign in</Link>
               </Button>
             </div>
           )}
@@ -110,7 +110,7 @@ const Navbar = () => {
               onClick={() => setMobileMenuOpen(false)}
             >
               <Home className="h-4 w-4" />
-              Главная
+              Main
             </Link>
             <Link
               to="/products"
@@ -118,7 +118,7 @@ const Navbar = () => {
               onClick={() => setMobileMenuOpen(false)}
             >
               <Package className="h-4 w-4" />
-              Продукты
+              Products
             </Link>
             
             {user && (
@@ -129,7 +129,7 @@ const Navbar = () => {
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <User className="h-4 w-4" />
-                  Личный кабинет
+                  My profile
                 </Link>
                 {user.role === 'admin' && (
                   <Link
@@ -138,7 +138,7 @@ const Navbar = () => {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <Settings className="h-4 w-4" />
-                    Админка
+                    Admin
                   </Link>
                 )}
                 <Button
@@ -147,7 +147,7 @@ const Navbar = () => {
                   onClick={handleLogout}
                 >
                   <LogOut className="h-4 w-4 mr-2" />
-                  Выйти
+                  Log out
                 </Button>
               </>
             )}
@@ -155,10 +155,10 @@ const Navbar = () => {
             {!user && (
               <div className="flex flex-col gap-2 pt-2">
                 <Button variant="ghost" className="w-full justify-start" asChild>
-                  <Link to="/login" onClick={() => setMobileMenuOpen(false)}>Войти</Link>
+                  <Link to="/login" onClick={() => setMobileMenuOpen(false)}>Log in</Link>
                 </Button>
                 <Button className="w-full justify-start" asChild>
-                  <Link to="/register" onClick={() => setMobileMenuOpen(false)}>Регистрация</Link>
+                  <Link to="/register" onClick={() => setMobileMenuOpen(false)}>Sign in</Link>
                 </Button>
               </div>
             )}

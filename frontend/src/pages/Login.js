@@ -24,7 +24,7 @@ const Login = () => {
       await login(email, password);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.error || 'Ошибка входа');
+      setError(err.response?.data?.error || 'Login error');
     } finally {
       setLoading(false);
     }
@@ -34,9 +34,9 @@ const Login = () => {
     <div className="container mx-auto py-6 sm:py-12 px-4 flex items-center justify-center min-h-[80vh]">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-xl sm:text-2xl font-bold text-center">Вход</CardTitle>
+          <CardTitle className="text-xl sm:text-2xl font-bold text-center">Log In</CardTitle>
           <CardDescription className="text-center">
-            Введите свои данные для входа в аккаунт
+            Enter your login details
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -59,7 +59,7 @@ const Login = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Пароль</Label>
+              <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
                 type="password"
@@ -72,12 +72,12 @@ const Login = () => {
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Вход...
+                  Logging in...
                 </>
               ) : (
                 <>
                   <LogIn className="mr-2 h-4 w-4" />
-                  Войти
+                  Log In 
                 </>
               )}
             </Button>
@@ -85,9 +85,9 @@ const Login = () => {
         </CardContent>
         <CardFooter className="flex flex-col">
           <p className="text-sm text-center text-muted-foreground">
-            Нет аккаунта?{' '}
+            Not registered?{' '}
             <Link to="/register" className="text-primary hover:underline font-medium">
-              Зарегистрироваться
+              Register
             </Link>
           </p>
         </CardFooter>
